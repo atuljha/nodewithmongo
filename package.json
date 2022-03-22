@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/atuljha/nodeMongoDemo/issues"
   },
-  "homepage": "https://github.com/atuljha/nodeMongoDemo#readme"
+  "homepage": "https://github.com/atuljha/nodeMongoDemo#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "method-override": "^3.0.0",
+    "mongo": "^0.1.0",
+    "morgan": "^1.10.0"
+  }
 }

@@ -3,14 +3,34 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const storyRoutes = require('./routes/storyRoutes');
+const {MongoClient} = require('mongodb');
+const {getCollection} = require('./models/story');
+const { get } = require('express/lib/request');
 
 //create app
 const app = express();
 
+
 //configure app
 let port = 3000;
 let host = 'localhost';
+let url = 'mongodb://localhost:27017';
 app.set('view engine', 'ejs');
+
+
+//connect to mongo
+MongoClient.connect(url) 
+.then( client =>{
+    const db = client.db("demos");
+    //console.log(db.listCollections().toArray().then(cols => console.log(cols)));
+    getCollection(db);
+    //start the server
+    app.listen(port, host, ()=>{
+    console.log('Server is running on port', port);
+});
+
+})
+.catch(err => console.log(err));
 
 //mount middlware
 app.use(express.static('public'));
@@ -43,7 +63,3 @@ app.use((err, req, res, next)=>{
     res.render('error', {error: err});
 });
 
-//start the server
-app.listen(port, host, ()=>{
-    console.log('Server is running on port', port);
-})
